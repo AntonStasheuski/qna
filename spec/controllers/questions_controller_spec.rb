@@ -5,6 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
     let(:questions) { create_list(:question, 3) }
 
     before { get :index }
+
     it 'populates an array of all questions' do
       get :index
       expect(assigns(:questions)).to match_array(questions)
@@ -13,6 +14,20 @@ RSpec.describe QuestionsController, type: :controller do
     it 'render index view' do
       get :index
       expect(response).to render_template :index
+    end
+  end
+
+  describe 'GET #show' do
+    let(:question) { create(:question) }
+
+    before { get :show, params: { id: question } }
+
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'render show view' do
+      expect(response).to render_template :show
     end
   end
 end

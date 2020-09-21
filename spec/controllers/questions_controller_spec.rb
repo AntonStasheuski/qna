@@ -29,7 +29,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     before { get :new }
-    
+
     it 'render new view' do
       expect(response).to render_template :new
     end

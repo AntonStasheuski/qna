@@ -13,33 +13,27 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    if question.save
-      redirect_to question
+    if @question.save
+      redirect_to @question
     else
       render :new
     end
   end
 
   def update
-    if question.update(question_params)
-      redirect_to question
+    if @question.update(question_params)
+      redirect_to @question
     else
       render :edit
     end
   end
 
   def destroy
-    question.destroy
+    @question.destroy
     redirect_to questions_path
   end
 
   private
-
-  helper_method :question
-
-  def question
-    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
-  end
 
   def find_question
     @question = Question.find(params[:id])

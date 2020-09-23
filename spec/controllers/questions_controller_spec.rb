@@ -36,7 +36,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #edit' do
     before { get :edit, params: { id: question } }
 
-    it 'render show view' do
+    it 'render edit view' do
       expect(response).to render_template :edit
     end
   end
@@ -105,7 +105,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'redirects to index' do
         delete :destroy, params: { id: question }
-        expect(response).to redirect_to question_path
+        expect(response).to redirect_to questions_path
       end
     end
   end

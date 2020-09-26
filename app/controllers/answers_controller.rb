@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :find_question, only: %i[index new edit create update destroy]
   before_action :find_answer, only: %i[show edit update destroy]
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
     @answers = @question.answers
@@ -17,7 +18,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to question_answer_path(question_id: @question, id: @answer)
     else
-      render :new
+      render 'questions/show'
     end
   end
 

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let(:user) { create(:user) }
+
   describe 'GET #index' do
     let(:answers) { create_list(:answer, 1) }
 
@@ -26,6 +28,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    before { login(user) }
+
     let(:question) { create(:question) }
 
     before { get :new, params: { question_id: question } }
@@ -36,6 +40,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
+    before { login(user) }
+
     let(:answer) { create(:answer) }
 
     before { get :edit, params: { question_id: answer.question, id: answer } }
@@ -46,6 +52,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { login(user) }
+
     let(:question) { create(:question) }
 
     context 'with valid attributes' do
@@ -64,12 +72,14 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 're-render new view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end
 
   describe 'PATCH #update' do
+    before { login(user) }
+
     let(:answer) { create(:answer) }
 
     context 'with valid attributes' do
@@ -91,10 +101,10 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       before { patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer, :invalid) } }
-      it 'does not change question attributes' do
+      it 'does not change answer attributes' do
         answer.reload
 
-        expect(answer.body).to eq 'MyText'
+        expect(answer.body).to eq 'MyAnswerBody'
       end
 
       it 're-render edit view' do
@@ -104,6 +114,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    before { login(user) }
+
     let!(:answer) { create(:answer) }
 
     it 'delete the answer' do

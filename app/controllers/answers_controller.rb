@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to question_answer_path(question_id: @question, id: @answer)
+      redirect_to question_answer_path(question_id: @question, id: @answer), notice: 'Your answer successfully created.'
     else
       render 'questions/show'
     end

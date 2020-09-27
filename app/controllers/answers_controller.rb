@@ -14,7 +14,7 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.new(answer_params.merge(user: current_user))
     if @answer.save
       redirect_to question_answer_path(question_id: @question, id: @answer), notice: 'Your answer successfully created.'
     else
@@ -31,8 +31,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy
-    redirect_to question_answers_path(question_id: @question)
+    if current_user.author? @answer
+      @answer.destroy
+      redirect_to question_answers_path(question_id: @answer.question), notice: 'Your answer successfully deleted.'
+    else
+      redirect_to question_answers_path(question_id: @answer.question), alert: "Only the author can delete a answer."
+    end
   end
 
   private

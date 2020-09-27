@@ -30,9 +30,9 @@ RSpec.describe AnswersController, type: :controller do
   describe 'GET #new' do
     before { login(user) }
 
-    let(:question) { create(:question) }
+    let(:answer) { create(:answer) }
 
-    before { get :new, params: { question_id: question } }
+    before { get :new, params: { question_id: answer.question , id: answer} }
 
     it 'render new view' do
       expect(response).to render_template :new
@@ -116,7 +116,7 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     before { login(user) }
 
-    let!(:answer) { create(:answer) }
+    let!(:answer) { create(:answer, user: user) }
 
     it 'delete the answer' do
       expect { delete :destroy, params: { question_id: answer.question, id: answer } }.to change(Answer, :count).by(-1)

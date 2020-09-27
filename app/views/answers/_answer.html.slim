@@ -1,2 +1,4 @@
 tr
   td= answer.body
+  - if current_user && current_user.author?(answer) && answer.valid?
+    = button_to 'Delete', question_answer_path(question_id: answer.question, id: answer), method: :delete

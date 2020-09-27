@@ -16,7 +16,7 @@ feature 'User can create answer', %q{
       visit question_path(question)
     end
 
-    scenario 'tries to ask a question' do
+    scenario 'tries to answer' do
       fill_in 'Body', with: 'body1'
       click_on 'Answer'
 
@@ -24,7 +24,7 @@ feature 'User can create answer', %q{
       expect(page).to have_content 'body1'
     end
 
-    scenario 'tries to ask a question with errors' do
+    scenario 'tries to answer with errors' do
       click_on 'Answer'
 
       expect(page).to have_content "Body can't be blank"
@@ -34,7 +34,7 @@ feature 'User can create answer', %q{
   describe 'Unauthenticated user' do
     background { visit question_path(question) }
     
-    scenario 'tries to ask a question with errors' do
+    scenario 'tries to answer with errors' do
       click_on 'Answer'
 
       expect(page).to have_content 'You need to sign in or sign up before continuing.'

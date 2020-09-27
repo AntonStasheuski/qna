@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can see question answers', %q{
+feature 'User can see question answers', "
   In order to see answers to a question
   As an any user
   I'd like to be able to see answers to a question
-} do
-
+" do
   given(:answer) { create(:answer) }
   describe 'Unauthenticated user' do
     scenario 'User tries to see a answers to a question' do

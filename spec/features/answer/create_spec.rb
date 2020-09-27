@@ -1,16 +1,14 @@
 require 'rails_helper'
 
-feature 'User can create answer', %q{
+feature 'User can create answer', "
   In order to give an answer to a question
   As an authenticated user
   I'd like to be able to give an answer to a question
-} do
-
+" do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
   describe 'Authenticated user' do
-
     background do
       sign_in(user)
       visit question_path(question)
@@ -33,7 +31,7 @@ feature 'User can create answer', %q{
 
   describe 'Unauthenticated user' do
     background { visit question_path(question) }
-    
+
     scenario 'tries to answer with errors' do
       click_on 'Answer'
 

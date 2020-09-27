@@ -35,7 +35,7 @@ class AnswersController < ApplicationController
       @answer.destroy
       redirect_to question_answers_path(question_id: @answer.question), notice: 'Your answer successfully deleted.'
     else
-      redirect_to question_answers_path(question_id: @answer.question), alert: "Only the author can delete a answer."
+      redirect_to question_answers_path(question_id: @answer.question), alert: 'Only the author can delete a answer.'
     end
   end
 

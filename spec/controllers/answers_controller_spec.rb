@@ -32,7 +32,7 @@ RSpec.describe AnswersController, type: :controller do
 
     let(:answer) { create(:answer) }
 
-    before { get :new, params: { question_id: answer.question , id: answer} }
+    before { get :new, params: { question_id: answer.question, id: answer } }
 
     it 'render new view' do
       expect(response).to render_template :new
@@ -88,14 +88,14 @@ RSpec.describe AnswersController, type: :controller do
         expect(assigns(:answer)).to eq answer
       end
       it 'change answer attributes' do
-        patch :update, params: { question_id: answer.question, id: answer, answer: { body: "body2"} }
+        patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'body2' } }
         answer.reload
 
         expect(answer.body).to eq 'body2'
       end
       it 'redirect to updated answer' do
         patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer) }
-        expect(response).to redirect_to question_answer_path( question_id: answer.question, id: answer )
+        expect(response).to redirect_to question_answer_path(question_id: answer.question, id: answer)
       end
     end
 

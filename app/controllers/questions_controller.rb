@@ -36,7 +36,7 @@ class QuestionsController < ApplicationController
       @question.destroy
       redirect_to questions_path, notice: 'Your question successfully deleted.'
     else
-      redirect_to questions_path, alert: "Only the author can delete a question."
+      redirect_to questions_path, alert: 'Only the author can delete a question.'
     end
   end
 

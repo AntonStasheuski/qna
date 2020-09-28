@@ -5,9 +5,11 @@ RSpec.describe User, type: :model do
   it { should have_many(:answers) }
 
   describe "author of method" do
-    describe "question" do
-      let(:user1) { create(:user) }
-      let(:user2) { create(:user) }
+
+    let(:user1) { create(:user) }
+    let(:user2) { create(:user) }
+
+    context "question" do
       let(:question) { create(:question, user: user1) }
 
       it 'yes' do
@@ -19,9 +21,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe "answer" do
-      let(:user1) { create(:user) }
-      let(:user2) { create(:user) }
+    context "answer" do
       let(:answer) { create(:answer, user: user1) }
 
       it 'yes' do

@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
       it 'yes' do
         expect(user1).to be_author(answer)
       end
-  
+
       it 'no' do
         expect(user2).to_not be_author(answer)
       end

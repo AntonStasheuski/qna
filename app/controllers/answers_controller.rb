@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params)
+    if current_user.author?(@answer) && @answer.update(answer_params)
       redirect_to question_answer_path(question_id: @question, id: @answer)
     else
       render :edit

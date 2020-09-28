@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
 
-  describe 'GET #index' do
+  context 'GET #index' do
     let(:answers) { create_list(:answer, 1) }
 
     before { get :index, params: { question_id: answers.first.question } }
@@ -16,7 +16,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
+  context 'GET #show' do
     let(:answer) { create(:answer) }
 
     before { get :show, params: { question_id: answer.question, id: answer } }
@@ -31,7 +31,7 @@ RSpec.describe AnswersController, type: :controller do
 
     before { login(user) }
 
-    describe 'GET #new' do
+    context 'GET #new' do
       let(:answer) { create(:answer) }
 
       before { get :new, params: { question_id: answer.question, id: answer } }
@@ -41,7 +41,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    describe 'GET #edit' do
+    context 'GET #edit' do
       let(:answer) { create(:answer) }
 
       before { get :edit, params: { question_id: answer.question, id: answer } }
@@ -51,7 +51,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    describe 'POST #create' do
+    context 'POST #create' do
       let(:question) { create(:question) }
 
       context 'with valid attributes' do
@@ -75,7 +75,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    describe 'PATCH #update' do
+    context 'PATCH #update' do
       let(:answer) { create(:answer) }
 
       context 'with valid attributes' do
@@ -109,7 +109,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    describe 'DELETE #destroy' do
+    context 'DELETE #destroy' do
       let!(:answer) { create(:answer, user: user) }
 
       it 'delete the answer' do
@@ -128,12 +128,12 @@ RSpec.describe AnswersController, type: :controller do
     let(:question) { create(:question) }
 
     shared_examples "redirect" do |path|
-      it "should redirect #{path} action to sign in" do
+      it "#{path} action to sign in" do
         expect(@response).to redirect_to new_user_session_path
       end
     end
 
-    describe 'GET #new' do
+    context 'GET #new' do
       before do
         get :new, params: { question_id: answer.question, id: answer }
         @response = response
@@ -141,7 +141,7 @@ RSpec.describe AnswersController, type: :controller do
       it_behaves_like "redirect", "new"
     end
 
-    describe 'GET #edit' do
+    context 'GET #edit' do
       before do
         get :edit, params: { question_id: answer.question, id: answer }
         @response = response
@@ -149,7 +149,7 @@ RSpec.describe AnswersController, type: :controller do
       it_behaves_like "redirect", "edit"
     end
 
-    describe 'POST #create' do
+    context 'POST #create' do
       before do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }
         @response = response
@@ -157,7 +157,7 @@ RSpec.describe AnswersController, type: :controller do
       it_behaves_like "redirect", "create"
     end
 
-    describe 'PATCH #update' do
+    context 'PATCH #update' do
       before do
         patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer) }
         @response = response
@@ -165,7 +165,7 @@ RSpec.describe AnswersController, type: :controller do
       it_behaves_like "redirect", "update"
     end
 
-    describe 'DELETE #destroy' do
+    context 'DELETE #destroy' do
       before do
         delete :destroy, params: { question_id: answer.question, id: answer }
         @response = response

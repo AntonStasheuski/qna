@@ -10,6 +10,13 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <%= render 'shared/nav' %>
+    <% else %>
+      <% session[:requested_path] = request.env['PATH_INFO'] %>
+    <% end %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>

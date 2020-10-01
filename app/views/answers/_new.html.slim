@@ -1,0 +1,6 @@
+=render 'devise/shared/error_messages', resource: @answer
+
+= form_with model: [@question, @question.answers.new], local: true do |f|
+  = f.label :body
+  = f.text_area :body
+  = f.submit 'Answer'

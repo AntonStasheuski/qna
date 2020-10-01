@@ -1,0 +1,5 @@
+- if answer.persisted?
+  tr
+    td= answer.body
+    - if current_user && current_user.author?(answer)
+      = button_to 'Delete', question_answer_path(question_id: answer.question, id: answer), method: :delete

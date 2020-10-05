@@ -22,7 +22,7 @@ feature 'User can create answer', "
       expect(page).to have_content 'body1'
     end
 
-    scenario 'tries to answer with errors' do
+    scenario 'tries to answer with errors', js: true do
       click_on 'Answer'
 
       expect(page).to have_content "Body can't be blank"

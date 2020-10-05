@@ -58,9 +58,9 @@ RSpec.describe AnswersController, type: :controller do
         it 'save a new answer' do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(Answer, :count).by(1)
         end
-        it 'redirect to show view' do
+        it 'redirect to question view' do
           post :create, params: { question_id: question, answer: attributes_for(:answer) }
-          expect(response).to redirect_to question_answer_path(question_id: question, id: question.answers.last)
+          expect(response).to redirect_to question
         end
         it 'create new user answer' do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(user.answers, :count).by(1)
@@ -94,7 +94,7 @@ RSpec.describe AnswersController, type: :controller do
           end
           it 'redirect to updated answer' do
             patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer) }
-            expect(response).to redirect_to question_answer_path(question_id: answer.question, id: answer)
+            expect(response).to redirect_to question_path answer.question
           end
         end
 
@@ -123,7 +123,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to index' do
         delete :destroy, params: { question_id: answer.question, id: answer }
-        expect(response).to redirect_to question_answers_path(question_id: answer.question)
+        expect(response).to redirect_to question_path answer.question
       end
     end
   end

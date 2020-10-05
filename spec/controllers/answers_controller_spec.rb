@@ -89,15 +89,11 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         context 'with invalid attributes' do
-          before { patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer, :invalid) } }
+          before { patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
           it 'does not change answer attributes' do
             answer.reload
 
             expect(answer.body).to eq 'MyAnswerBody'
-          end
-
-          it 're-render edit view' do
-            expect(response).to render_template :edit
           end
         end
       end
@@ -159,13 +155,13 @@ RSpec.describe AnswersController, type: :controller do
       end
       it_behaves_like "redirect", "update"
 
-      context 'random user' do
+      context do
         let(:user1) { create(:user) }
         let(:user2) { create(:user) }
         let(:answer) { create(:answer, user: user1) }
         before { login(user2) }
 
-        before { patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'body2' } } }
+        before { patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'body2' } }, format: :js }
 
         context 'with attributes' do
           it 'can not change answer' do

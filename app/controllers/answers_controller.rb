@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :find_question, only: %i[index create update]
+  before_action :find_question, only: %i[index create]
   before_action :find_answer, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[index show]
 
@@ -20,9 +20,7 @@ class AnswersController < ApplicationController
 
   def update
     if current_user.author?(@answer) && @answer.update(answer_params)
-      redirect_to @question
-    else
-      render :edit
+      redirect_to @answer.question, notice: 'Your answer successfully updated.'
     end
   end
 

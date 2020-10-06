@@ -18,7 +18,6 @@ feature 'User can edit  his answer', %q{
       within '.answers' do
         fill_in 'Your answer', with: 'edited'
         click_on 'Create'
-        save_and_open_page
         expect(page).to_not have_content(answer.body)
         expect(page).to have_content('edited')
         expect(page).to_not have_selector 'textarea'

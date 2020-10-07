@@ -39,9 +39,8 @@ feature 'User can edit  his answer', %q{
       within '.answers' do
         fill_in 'Your answer', with: ''
         click_on 'Create'
-        expect(page).to have_content(answer.body)
-        expect(page).to have_selector 'textarea'
       end
+      expect(page).to have_content("Body can't be blank")
     end
   end
 

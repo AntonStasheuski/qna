@@ -1,7 +1,12 @@
 class AnswersController < ApplicationController
   before_action :find_question, only: %i[index create]
-  before_action :find_answer, only: %i[show edit update destroy]
+  before_action :find_answer, only: %i[show edit update destroy mark_as_best]
   before_action :authenticate_user!, except: %i[index show]
+
+  def mark_as_best
+    @question = @answer.question
+    @answer.mark_as_best if current_user.author? @question
+  end
 
   def index
     @answers = @question.answers

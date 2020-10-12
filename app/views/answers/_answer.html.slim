@@ -6,6 +6,8 @@
 
         = link_to 'Delete', answer_path(answer), class: 'delete-answer-link', method: :delete, remote: true
 
+        = link_to 'Mark as best', mark_as_best_answer_path(answer), remote: true, method: :post
+
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
         = form_with  model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}"} do |f|
           = f.label :body, 'Your answer'

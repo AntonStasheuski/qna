@@ -13,7 +13,7 @@ feature 'User can choose best answer', "
 
   describe "Authenticated user" do
 
-    scenario "user author of the question" do
+    scenario "user author of the question", js: true do
       sign_in(user1)
       visit question_path question
 
@@ -21,9 +21,7 @@ feature 'User can choose best answer', "
 
       click_on 'Mark as best'
 
-      within '.best_answer' do
-        expect(page).to have_content (answer.body)
-      end
+      expect(page).to have_selector(:link_or_button, 'Unmark as best')
     end
 
     scenario "user not author of the question" do

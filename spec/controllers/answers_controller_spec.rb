@@ -31,16 +31,6 @@ RSpec.describe AnswersController, type: :controller do
 
     before { login(user) }
 
-    context 'GET #new' do
-      let(:answer) { create(:answer) }
-
-      before { get :new, params: { question_id: answer.question, id: answer } }
-
-      it 'render new view' do
-        expect(response).to render_template :new
-      end
-    end
-
     context 'GET #edit' do
       let(:answer) { create(:answer) }
 
@@ -58,22 +48,22 @@ RSpec.describe AnswersController, type: :controller do
         it 'save a new answer' do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(Answer, :count).by(1)
         end
-        it 'redirect to show view' do
+        it 'redirect to question view' do
           post :create, params: { question_id: question, answer: attributes_for(:answer) }
-          expect(response).to redirect_to question_answer_path(question_id: question, id: question.answers.last)
+          expect(response).to redirect_to question
         end
         it 'create new user answer' do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(user.answers, :count).by(1)
         end
       end
 
-      context 'with invalid attributes' do
+      context 'with invalid attributes', js: true do
         it 'does not save the answer' do
-          expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) } }.to_not change(Answer, :count)
+          expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js }.to_not change(Answer, :count)
         end
-        it 're-render new view' do
-          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-          expect(response).to render_template 'questions/show'
+        it 're-render create view' do
+          post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js
+          expect(response).to render_template :create
         end
       end
     end
@@ -94,20 +84,16 @@ RSpec.describe AnswersController, type: :controller do
           end
           it 'redirect to updated answer' do
             patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer) }
-            expect(response).to redirect_to question_answer_path(question_id: answer.question, id: answer)
+            expect(response).to redirect_to question_path answer.question
           end
         end
 
         context 'with invalid attributes' do
-          before { patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer, :invalid) } }
+          before { patch :update, params: { question_id: answer.question, id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
           it 'does not change answer attributes' do
             answer.reload
 
             expect(answer.body).to eq 'MyAnswerBody'
-          end
-
-          it 're-render edit view' do
-            expect(response).to render_template :edit
           end
         end
       end
@@ -118,13 +104,9 @@ RSpec.describe AnswersController, type: :controller do
       let!(:answer) { create(:answer, user: user) }
 
       it 'delete the answer' do
-        expect { delete :destroy, params: { question_id: answer.question, id: answer } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { question_id: answer.question, id: answer }, format: :js }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to index' do
-        delete :destroy, params: { question_id: answer.question, id: answer }
-        expect(response).to redirect_to question_answers_path(question_id: answer.question)
-      end
     end
   end
 
@@ -169,13 +151,13 @@ RSpec.describe AnswersController, type: :controller do
       end
       it_behaves_like "redirect", "update"
 
-      context 'random user' do
+      context do
         let(:user1) { create(:user) }
         let(:user2) { create(:user) }
         let(:answer) { create(:answer, user: user1) }
         before { login(user2) }
 
-        before { patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'body2' } } }
+        before { patch :update, params: { question_id: answer.question, id: answer, answer: { body: 'body2' } }, format: :js }
 
         context 'with attributes' do
           it 'can not change answer' do

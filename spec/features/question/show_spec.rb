@@ -26,9 +26,8 @@ feature 'User can see question answers', "
       expect(page).to have_content 'body1'
     end
 
-    scenario ' create answer to a question with invalid attr' do
+    scenario ' create answer to a question with invalid attr', js: true do
       visit question_path(answer.question)
-
       click_on 'Answer'
 
       expect(page).to have_content "Body can't be blank"

@@ -1,3 +1,5 @@
 = render @question
-= render @question.answers
+.answers
+  = render @question.answers.sort_by_best
 = render 'answers/new'
+

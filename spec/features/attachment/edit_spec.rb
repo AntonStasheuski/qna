@@ -9,13 +9,13 @@ feature 'User can edit attachment', "
   given(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, :file, question: question, user: user) }
 
+  background do
+    sign_in(user)
+    visit question_path(question)
+  end
+
   describe 'Authenticated user', js: true do
     describe 'Answer' do
-      background do
-        sign_in(user)
-        visit question_path(question)
-      end
-
       scenario 'edit his answer with changing file' do
         click_on 'Edit'
 
@@ -44,11 +44,19 @@ feature 'User can edit attachment', "
       end
     end
 
-    # describe 'Question', js: true do
-    #   background do
-    #     sign_in(user)
-    #     visit new_question_path
-    #   end
-    # end
+    describe 'Question', js: true do
+      scenario 'edit his question with changing file' do
+
+        within '.question' do
+          click_on 'Edit question'
+          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+
+          click_on 'Create'
+          expect(page).to have_link 'spec_helper.rb'
+          expect(page).to have_content(question.body)
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+    end
   end
 end

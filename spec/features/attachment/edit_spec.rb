@@ -46,7 +46,6 @@ feature 'User can edit attachment', "
 
     describe 'Question', js: true do
       scenario 'edit his question with changing file' do
-
         within '.question' do
           click_on 'Edit question'
           attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"

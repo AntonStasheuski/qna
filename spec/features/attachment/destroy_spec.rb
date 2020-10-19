@@ -16,7 +16,6 @@ feature 'User can delete attachment', "
 
   describe 'Authenticated user', js: true do
     describe 'Answer' do
-
       scenario 'tries to delete a attachment from answer' do
         within '.answers' do
           click_on 'Delete file'
@@ -28,7 +27,6 @@ feature 'User can delete attachment', "
 
   describe 'Question', js: true do
     scenario 'tries to delete a attachment from question' do
-
       within '.question' do
         click_on 'Delete file'
         expect(page).to_not have_link 'Delete file'

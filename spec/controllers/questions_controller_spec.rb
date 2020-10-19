@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-
   context 'GET #index' do
     let(:questions) { create_list(:question, 3) }
 
@@ -26,7 +25,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe "Authorized user" do
+  describe 'Authorized user' do
     let(:user) { create(:user) }
     before { login(user) }
     let(:question) { create(:question, user: user) }
@@ -48,7 +47,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'POST #create' do
-
       context 'with valid attributes' do
         it 'save a new question' do
           expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -114,7 +112,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'DELETE #destroy' do
-
       let!(:question) { create(:question, user: user) }
 
       it 'delete the question' do
@@ -128,10 +125,10 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe "Unauthorized user" do
+  describe 'Unauthorized user' do
     let(:question) { create(:question) }
 
-    shared_examples "redirect" do |path|
+    shared_examples 'redirect' do |path|
       it "#{path} action to sign in" do
         expect(@response).to redirect_to new_user_session_path
       end
@@ -142,7 +139,7 @@ RSpec.describe QuestionsController, type: :controller do
         get :new
         @response = response
       end
-      it_behaves_like "redirect", "new"
+      it_behaves_like 'redirect', 'new'
     end
 
     context 'GET #edit' do
@@ -150,7 +147,7 @@ RSpec.describe QuestionsController, type: :controller do
         get :edit, params: { id: question }
         @response = response
       end
-      it_behaves_like "redirect", "edit"
+      it_behaves_like 'redirect', 'edit'
     end
 
     context 'POST #create' do
@@ -158,7 +155,7 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:question) }
         @response = response
       end
-      it_behaves_like "redirect", "create"
+      it_behaves_like 'redirect', 'create'
     end
 
     context 'PATCH #update' do
@@ -166,7 +163,7 @@ RSpec.describe QuestionsController, type: :controller do
         patch :update, params: { id: question, question: attributes_for(:question) }
         @response = response
       end
-      it_behaves_like "redirect", "update"
+      it_behaves_like 'redirect', 'update'
 
       context 'random user' do
         let(:user1) { create(:user) }
@@ -190,7 +187,7 @@ RSpec.describe QuestionsController, type: :controller do
         delete :destroy, params: { id: question }
         @response = response
       end
-      it_behaves_like "redirect", "update"
+      it_behaves_like 'redirect', 'update'
     end
   end
 end

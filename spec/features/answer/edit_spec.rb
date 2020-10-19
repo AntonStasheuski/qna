@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-feature 'User can edit  his answer', %q{
+feature 'User can edit  his answer', "
   In order to correct mistakes
   As an author  of answer
   I'd like to be able to edit my answer
-} do
+" do
   given!(:user) { create(:user) }
   given!(:user2) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
-  describe "Authenticated user", js: true do
+  describe 'Authenticated user', js: true do
     scenario 'edits his answer' do
       sign_in user
       visit question_path(question)
@@ -44,7 +44,7 @@ feature 'User can edit  his answer', %q{
     end
   end
 
-  describe "Unauthenticated user" do
+  describe 'Unauthenticated user' do
     scenario "can't edit answer" do
       visit questions_path(question)
 

@@ -8,5 +8,11 @@ FactoryBot.define do
       title { nil }
       user
     end
+
+    trait :file do
+      before :create do |question|
+        question.files.attach Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb")
+      end
+    end
   end
 end

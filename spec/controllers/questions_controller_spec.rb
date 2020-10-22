@@ -28,7 +28,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'Authorized user' do
     let(:user) { create(:user) }
     before { login(user) }
-    let(:question) { create(:question, user: user) }
+    let!(:question) { create(:question, user: user) }
 
     context 'GET #new' do
       before { get :new }

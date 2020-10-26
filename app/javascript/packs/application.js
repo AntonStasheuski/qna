@@ -10,6 +10,7 @@ require("channels")
 require("jquery")
 require("common/answers")
 require("common/questions")
+require("common/cocoon")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

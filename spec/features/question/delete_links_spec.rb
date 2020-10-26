@@ -12,9 +12,11 @@ feature 'User can delete links drom question', %q{
     scenario ' delete link from question', js: true do
       sign_in(user)
       visit question_path(question)
-      within '.links' do
-        click_on 'Delete link'
-        expect(page).to_not have_link 'test', href: "https://www.test.com/"
+      within '.question' do
+        within '.links' do
+          click_on 'Delete link'
+          expect(page).to_not have_link 'test', href: "https://www.test.com/"
+        end
       end
     end
   end
@@ -23,7 +25,9 @@ feature 'User can delete links drom question', %q{
     scenario " can't delete link from question", js: true do
       sign_in(user2)
       visit question_path(question)
-      expect(page).to_not have_selector(:link_or_button, 'Delete link')
+      within '.question' do
+        expect(page).to_not have_selector(:link_or_button, 'Delete link')
+      end
     end
   end
 

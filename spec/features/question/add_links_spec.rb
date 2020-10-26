@@ -16,10 +16,31 @@ feature 'User can add links to question', %q{
     fill_in 'Body', with: 'body1'
 
     fill_in 'Link name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+    fill_in 'Link url', with: gist_url
 
     click_on 'Ask'
 
+    expect(page).to have_link 'My gist', href: gist_url
+  end
+
+  scenario 'User adds links when ask question' do
+    sign_in(user)
+    visit new_question_path
+
+    fill_in 'Title', with: 'title1'
+    fill_in 'Body', with: 'body1'
+
+    fill_in 'Link name', with: 'My gist'
+    fill_in 'Link url', with: gist_url
+
+    click_on 'Add link'
+
+    fill_in 'Link name', with: 'My gist2'
+    fill_in 'Link url', with: gist_url
+
+    click_on 'Ask'
+
+    expect(page).to have_link 'My gist2', href: gist_url
     expect(page).to have_link 'My gist', href: gist_url
   end
 end

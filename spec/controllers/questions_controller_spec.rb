@@ -92,7 +92,7 @@ RSpec.describe QuestionsController, type: :controller do
         end
 
         context 'with invalid attributes' do
-          before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+          before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) },format: :js }
           it 'does not change question attributes' do
             question.reload
 
@@ -100,9 +100,6 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.body).to eq 'MyQuestionBody'
           end
 
-          it 're-render edit view' do
-            expect(response).to render_template :edit
-          end
         end
       end
     end
@@ -167,7 +164,7 @@ RSpec.describe QuestionsController, type: :controller do
         let(:question) { create(:question, user: user1) }
         before { login(user2) }
 
-        before { patch :update, params: { id: question, question: { title: 'title22', body: 'body22' } } }
+        before { patch :update, params: { id: question, question: { title: 'title22', body: 'body22' } }, format: :js }
 
         context 'with attributes' do
           it 'can not change question' do

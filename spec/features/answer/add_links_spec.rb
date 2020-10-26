@@ -12,13 +12,14 @@ feature 'User can add links to answer', %q{
   scenario 'User adds link when ask answer' do
     sign_in(user)
     visit question_path(question)
+    within '.new-answer' do
+      fill_in 'Body', with: 'body1'
 
-    fill_in 'Body', with: 'body1'
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Link url', with: gist_url
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Link url', with: gist_url
-
-    click_on 'Answer'
+      click_on 'Answer'
+    end
 
     expect(page).to have_link 'My gist', href: gist_url
   end
@@ -27,18 +28,19 @@ feature 'User can add links to answer', %q{
     sign_in(user)
     visit question_path(question)
 
-    fill_in 'Body', with: 'body1'
+    within '.new-answer' do
+      fill_in 'Body', with: 'body1'
 
-    fill_in 'Link name', with: 'My gist'
-    fill_in 'Link url', with: gist_url
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Link url', with: gist_url
 
-    click_on 'Add link'
+      click_on 'Add link'
 
-    fill_in 'Link name', with: 'My gist2'
-    fill_in 'Link url', with: gist_url
+      fill_in 'Link name', with: 'My gist2'
+      fill_in 'Link url', with: gist_url
 
-    click_on 'Answer'
-
+      click_on 'Answer'
+    end
     expect(page).to have_link 'My gist2', href: gist_url
     expect(page).to have_link 'My gist', href: gist_url
   end

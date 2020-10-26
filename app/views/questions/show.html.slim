@@ -1,5 +1,7 @@
+.question-errors
 = render @question
 .answers
   = render @question.answers.sort_by_best
-= render 'answers/new'
+.new-answer
+  = render 'answers/new'
 

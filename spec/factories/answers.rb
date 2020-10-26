@@ -15,5 +15,12 @@ FactoryBot.define do
         answer.files.attach Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb")
       end
     end
+
+    trait :link do
+      before :create do |answer|
+        answer.links.new(name: "test", url: "https://www.test.com/").save!
+      end
+    end
+
   end
 end

@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author?(@question) && @question.update(question_params)
+    if current_user&.author?(@question) && @question.update(question_params)
       redirect_to @question
     else
       render :edit
@@ -36,7 +36,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author? @question
+    if current_user&.author? @question
       @question.destroy
       redirect_to questions_path, notice: 'Your question successfully deleted.'
     else

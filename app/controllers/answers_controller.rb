@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
 
   def mark_as_best
     @question = @answer.question
-    @answer.mark_as_best if current_user.author? @question
+    @answer.mark_as_best if current_user&.author? @question
   end
 
   def index
@@ -24,13 +24,13 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author?(@answer) && @answer.update(answer_params)
+    if current_user&.author?(@answer) && @answer.update(answer_params)
       redirect_to @answer.question, notice: 'Your answer successfully updated.'
     end
   end
 
   def destroy
-    if current_user.author? @answer
+    if current_user&.author? @answer
       @answer.destroy
       flash[:notice] = 'Your answer successfully deleted.'
     end

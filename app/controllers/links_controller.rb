@@ -2,7 +2,7 @@ class LinksController < ApplicationController
   before_action :find_link, only: %i[destroy]
 
   def destroy
-    if current_user.author? @link.linkable
+    if current_user&.author? @link.linkable
       @link.destroy
       flash[:notice] = 'Your link successfully deleted.'
     end

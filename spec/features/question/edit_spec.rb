@@ -8,7 +8,7 @@ feature 'User can edit  his answer', "
   given!(:user) { create(:user) }
   given!(:user2) { create(:user) }
   given!(:question) { create(:question, user: user) }
-  given(:gist_url) { 'https://gist.github.com/AntonStashevski/d5d415a420a6f97d687c3bf8d2c1c568' }
+  given(:url) { 'https://www.google.com/' }
 
   describe 'Authenticated user', js: true do
     scenario 'edits his question' do
@@ -53,10 +53,10 @@ feature 'User can edit  his answer', "
         click_on 'Edit'
         fill_in 'Title', with: 'edited'
         click_on 'Add link'
-        fill_in 'Link name', with: 'My gist'
-        fill_in 'Link url', with: gist_url
+        fill_in 'Link name', with: 'Google'
+        fill_in 'Link url', with: url
         click_on 'Create'
-        expect(page).to have_link 'My gist', href: gist_url
+        expect(page).to have_link 'Google', href: url
       end
     end
   end

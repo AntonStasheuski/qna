@@ -1,2 +1,2 @@
 $('.notice').text('<%= flash[:notice] %>')
-$('.answers').replaceWith('<%= j render(@answer.question.answers) %>');
+$('<%= "#answer-id-#{@answer.id}" %>').remove()

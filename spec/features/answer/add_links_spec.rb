@@ -7,7 +7,7 @@ feature 'User can add links to answer', %q{
 } do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given(:gist_url) { 'https://gist.github.com/AntonStashevski/d5d415a420a6f97d687c3bf8d2c1c568' }
+  given(:url) { 'https://www.google.com/' }
 
   scenario 'User adds link when ask answer' do
     sign_in(user)
@@ -15,13 +15,13 @@ feature 'User can add links to answer', %q{
     within '.new-answer' do
       fill_in 'Body', with: 'body1'
 
-      fill_in 'Link name', with: 'My gist'
-      fill_in 'Link url', with: gist_url
+      fill_in 'Link name', with: 'Google'
+      fill_in 'Link url', with: url
 
       click_on 'Answer'
     end
 
-    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_link 'Google', href: url
   end
 
   scenario 'User adds links when ask answer' do
@@ -31,17 +31,17 @@ feature 'User can add links to answer', %q{
     within '.new-answer' do
       fill_in 'Body', with: 'body1'
 
-      fill_in 'Link name', with: 'My gist'
-      fill_in 'Link url', with: gist_url
+      fill_in 'Link name', with: 'Google'
+      fill_in 'Link url', with: url
 
       click_on 'Add link'
 
-      fill_in 'Link name', with: 'My gist2'
-      fill_in 'Link url', with: gist_url
+      fill_in 'Link name', with: 'Google2'
+      fill_in 'Link url', with: url
 
       click_on 'Answer'
     end
-    expect(page).to have_link 'My gist2', href: gist_url
-    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_link 'Google', href: url
+    expect(page).to have_link 'Google2', href: url
   end
 end

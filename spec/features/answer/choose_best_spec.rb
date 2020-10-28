@@ -8,7 +8,9 @@ feature 'User can choose best answer', "
   given!(:user1) { create(:user) }
   given!(:user2) { create(:user) }
   given!(:question) { create(:question, user: user1) }
+  given!(:question_with_reward) { create(:question, :reward, user: user1) }
   given!(:answer) { create(:answer, question: question, user: user1) }
+  given!(:answer1) { create(:answer, question: question_with_reward, user: user1) }
 
   describe 'Authenticated user' do
     scenario 'user author of the question', js: true do
@@ -20,6 +22,21 @@ feature 'User can choose best answer', "
       click_on 'Mark as best'
 
       expect(page).to have_selector(:link_or_button, 'Unmark as best')
+    end
+
+    scenario 'user author of the question with reward', js: true do
+      sign_in(user1)
+      visit question_path question_with_reward
+
+      expect(page).to have_selector(:link_or_button, 'Mark as best')
+
+      click_on 'Mark as best'
+
+      expect(page).to have_selector(:link_or_button, 'Unmark as best')
+
+      visit rewards_path
+
+      expect(page).to have_content question_with_reward.reward.title
     end
 
     scenario 'user not author of the question' do

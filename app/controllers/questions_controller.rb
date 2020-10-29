@@ -8,10 +8,13 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    @answer.links.new # .build
   end
 
   def new
     @question = current_user.questions.new
+    @question.links.new # .build
+    @question.build_reward
   end
 
   def edit; end
@@ -20,16 +23,12 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new(question_params)
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
     end
   end
 
   def update
     if current_user.author?(@question) && @question.update(question_params)
       redirect_to @question
-    else
-      render :edit
     end
   end
 
@@ -49,6 +48,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: [:name, :url, :done, :_destroy], reward_attributes: [:title, :file])
   end
 end

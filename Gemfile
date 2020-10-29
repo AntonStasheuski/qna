@@ -32,6 +32,7 @@ gem 'decent_exposure', '3.0.0'
 gem 'devise', '~> 4.0'
 gem 'jquery-rails'
 gem 'azure-storage', '~> 0.15.0.preview', require: false
+gem "cocoon"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

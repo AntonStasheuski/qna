@@ -9,6 +9,7 @@ feature 'User can edit  his answer', "
   given!(:user2) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
+  given(:url) { 'https://www.google.com/' }
 
   describe 'Authenticated user', js: true do
     scenario 'edits his answer' do
@@ -22,6 +23,21 @@ feature 'User can edit  his answer', "
         expect(page).to_not have_content(answer.body)
         expect(page).to have_content('edited')
         expect(page).to_not have_selector 'textarea'
+      end
+    end
+
+    scenario 'add links to answer' do
+      sign_in user
+      visit question_path(question)
+      click_on 'Edit'
+
+      within '.answers' do
+        fill_in 'Your answer', with: 'edited'
+        click_on 'Add link'
+        fill_in 'Link name', with: 'Google'
+        fill_in 'Link url', with: url
+        click_on 'Create'
+        expect(page).to have_link 'Google', href: url
       end
     end
 

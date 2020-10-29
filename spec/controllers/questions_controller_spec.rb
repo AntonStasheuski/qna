@@ -28,7 +28,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'Authorized user' do
     let(:user) { create(:user) }
     before { login(user) }
-    let(:question) { create(:question, user: user) }
+    let!(:question) { create(:question, user: user) }
 
     context 'GET #new' do
       before { get :new }
@@ -62,11 +62,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       context 'with invalid attributes' do
         it 'does not save the question' do
-          expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
-        end
-        it 're-render new view' do
-          post :create, params: { question: attributes_for(:question, :invalid) }
-          expect(response).to render_template :new
+          expect { post :create, params: { question: attributes_for(:question, :invalid) }, format: :js }.to_not change(Question, :count)
         end
       end
     end
@@ -96,7 +92,7 @@ RSpec.describe QuestionsController, type: :controller do
         end
 
         context 'with invalid attributes' do
-          before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+          before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) },format: :js }
           it 'does not change question attributes' do
             question.reload
 
@@ -104,9 +100,6 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.body).to eq 'MyQuestionBody'
           end
 
-          it 're-render edit view' do
-            expect(response).to render_template :edit
-          end
         end
       end
     end
@@ -171,7 +164,7 @@ RSpec.describe QuestionsController, type: :controller do
         let(:question) { create(:question, user: user1) }
         before { login(user2) }
 
-        before { patch :update, params: { id: question, question: { title: 'title22', body: 'body22' } } }
+        before { patch :update, params: { id: question, question: { title: 'title22', body: 'body22' } }, format: :js }
 
         context 'with attributes' do
           it 'can not change question' do

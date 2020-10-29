@@ -3,7 +3,7 @@ class AttachmentsController < ApplicationController
   before_action :find_attachment, only: %i[destroy]
 
   def destroy
-    if current_user&.author? @attachment.record
+    if current_user.author? @attachment.record
       @attachment.purge
       flash[:notice] = 'Your attachment successfully deleted.'
     end

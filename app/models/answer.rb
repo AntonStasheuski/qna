@@ -5,6 +5,8 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
+  include Rateable
+
   accepts_nested_attributes_for :links, reject_if: :all_blank
 
   validates :body, presence: true

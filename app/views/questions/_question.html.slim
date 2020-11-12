@@ -1,6 +1,6 @@
 - if question.persisted?
   .question
-    h1= question.title
+    h1= link_to question.title, question_path(question)
     h2= question.body
     p= question.reward&.title
     - if current_user && current_user&.author?(question)
@@ -22,3 +22,6 @@
           = f.submit 'Create'
     = render 'shared/links', resource: question
     = render 'shared/attachments', resource: question
+    .question-rates
+      - if !current_user&.author?(question) && current_user
+        = render 'shared/rates', resource: question

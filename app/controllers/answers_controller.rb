@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[show edit update destroy mark_as_best]
   before_action :authenticate_user!, except: %i[index show]
 
+  include Rated
+
   def mark_as_best
     @question = @answer.question
     @answer.mark_as_best if current_user.author? @question
